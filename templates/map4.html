@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Page</title>
+</head>
+<body>
+    <script>
+
+        var list1 = JSON.parse({{data|tojson}});
+        var len = list1.length;
+        for(var i=0 ; i<len; i++){
+            var lat = list1[i][5][0];
+            var lng = list1[i][5][1];
+            document.write( [lat,lng],'<br>');
+        };
+        
+        document.write(list1,'<br');
+        document.write(len,'<br>');
+        document.write("list1變數型態是：",typeof(list1),"<br>");
+    </script>
+
+</body>
+</html>

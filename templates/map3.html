@@ -1,0 +1,68 @@
+<!-- <!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
+        <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
+    
+    </head>
+
+    <div id="mapid" d="{{data}}></div>
+
+    <body>
+        <script type="text/javascript">
+        <script>
+            // 建立 Leaflet 地圖
+            var map = L.map('mapid');
+          
+            // 設定經緯度座標
+            map.setView(new L.LatLng(22.992, 120.239), 12);
+            
+            // 設定圖資來源
+            var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 16});
+            map.addLayer(osm);
+          
+          </script>
+
+    </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Page</title>
+</head>
+<body>
+
+    <!-- <script>
+        // let list1 = JSON.parse({{data|tojson}});
+        let list1 = {{data|tojson}};
+        var listLength = list1.length;
+        document.write(listLength);
+        document.write(list1);
+    </script> -->
+    <script>
+        // let list1 = JSON.parse({{data|tojson}})
+        //let list1 = {{data|tojson}};
+        //var listLength = list1.length;
+        
+        //
+        var list1 = JSON.parse({{data|tojson}});
+        var len = list1.length;
+        // for(var i=0 ; i<listLength; i++){
+        //     var lat = list1[i][5][0];
+        //     console.log(lat);
+        // };
+        //
+        //for(var i=0; i<5; i++){
+        //    document.write(listLength)
+        //}
+        document.write(len,'<br>');
+        document.write("list1變數型態是：",typeof(list1),"<br>");
+    </script>
+
+</body>
+</html>
+

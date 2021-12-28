@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 提供 ico 檔案 -->
+  <link rel="icon" href="{{ url_for('static', filename='img/webIcon_1.ico') }}">
+
+  <!-- 引入 cdn CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">  
+
+  <!-- 引入我們自己的 CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+  <!-- 直接定義 CSS -->
+  <style> body {font-family: 'Noto Sans TC', sans-serif;}</style>
+
+  <!-- 可供更改的部分 -->
+  <title>路況回報網</title>
+
+  <!--leaflet cdn-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+</head>
+
+<body>
+    <!-- 希望能固定出現在每個網頁的 nav -->
+    <!--<nav class="navbar navbar-expand-md bg-dirty-purple navbar-dark">-->
+      <nav class="nvbar navbar-expand-md bg navbar-dark">
+    
+      <!-- 宣告一個可折疊的按鈕 -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <!-- 導覽列 -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/" >首頁</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="form">紀錄查詢</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="map5">坑洞地圖</a>
+          </li>
+          <li class="nav-item-dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              外部連結
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">link1</a>
+              <a class="dropdown-item" href="#">link2</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">about</a>
+            </div>
+          </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        
+      </div>
+    </nav>
+
+    <!--指定div空間給map-->
+    <div id="map"></div>
+
+    <!--import 外部css-->
+    <link rel="stylesheet" href="static/css/leaflet2.css"/>
+ 
+    <!--import 外部js-->
+    <script type="text/javascript" src="static/js/leaflet2.js"></script>
+
+    <!--add marker-->
+    <script>
+        var data = JSON.parse({{data|tojson}});
+        var len = data.length;
+        for(var i=0 ; i<len; i++){
+            var lat = data[i][5][0];
+            var lng = data[i][5][1];
+            var address = data[i][3]
+            var count = data[i][4]
+            var center = [lat,lng];
+            // marker
+            const marker = L.marker(center, {title:address, opacity:1.0}).addTo(map);
+
+            // Popup
+            marker.bindPopup('坑洞數量: '+ count + '<br>' +'緯度: '+ lat +'<br>'+'經度: '+ lng);
+
+            //circle (radius:50m)
+            var circle = L.circle(center,50, 
+            {
+            color: 'red',      // 線條顏色
+            fillColor: '#f03', // 填充顏色
+            fillOpacity: 0.5   // 透明度
+            }
+            ).addTo(map);
+        };
+
+  
+    </script>
+
+  <!-- 希望能固定出現在每個網頁的 footer -->
+  <footer>
+    <p>© 2021 create by Eric Yang</p>
+  </footer>
+  
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>

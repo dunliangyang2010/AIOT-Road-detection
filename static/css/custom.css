@@ -1,0 +1,28 @@
+/* navbar */
+.bg {
+    background-color: black;
+    padding: 20px
+}
+
+/* nav-link */
+a.nav-link{
+    color:palegoldenrod;
+}
+li.nav-item{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+ul.navbar-nav{
+    padding-left: 50px
+}
+li.nav-item-dropdown{
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
+a.dropdown-item{
+    background-color: black;
+    color:palegoldenrod;
+    padding-top: 0px;
+    padding-bottom: 0;
+}

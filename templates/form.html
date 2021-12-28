@@ -1,0 +1,49 @@
+<!--宣告要套用模板-->
+{% extends "base.html" %}
+
+{% block title %}路況回報網{% endblock %}
+
+{% block main %}
+
+<!--flask傳變數到div-->
+<div id="dataid" d="{{data}}"></div>
+
+<!-- <ul>
+{% for da in data %}
+  <li>longitude:{{da[0]}} latitude:{{da[1]}} address:{{da[2]}}</a></li>
+{% endfor %}
+</ul> -->
+
+<div class='container' style="background-color: rgba(198, 220, 178, 0.5)">
+  <div class='row align-items-start'>
+    <div class='col'>
+      <h1>坑洞回報紀錄</h1>
+    </div>
+  </div>
+
+  <!-- 宣告一個巨集 -->
+  {% macro easy_row(data, tag) -%}
+    <!-- 訓練紀錄 -->
+    {% for d in data %}
+    <div class='row'>
+      {% for item in d %}
+      <div class='col'>
+        <{{ tag }}> {{item}} </{{ tag }}>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  {%- endmacro %}
+
+  <!-- 宣告一些等等會用來創造欄位說明的變數 -->
+{% set col_names = (("Record_no", "Date", "time", "Address", "count", "CSYS"),) %}
+
+<!-- 用巨集快速創造欄位名稱 -->
+{{ easy_row(col_names, "h2") }}
+
+<!-- 將所有草泥馬的訓練紀錄列在下面 -->
+{{ easy_row(data, "p") }}
+  
+</div>
+
+{% endblock %}
